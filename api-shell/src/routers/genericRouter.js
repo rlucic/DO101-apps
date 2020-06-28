@@ -3,10 +3,12 @@
 
 //import npm libraries
 const express = require('express')
+const moment = require('moment')
 
 //import local libraries
 const sampleAuth = require('../middleware/sampleMiddleware')
 
+const dateFormat = 'DD-MM-YYYY : hh:mm:ss'
 
 const genericRouter = express.Router()
 
@@ -18,11 +20,15 @@ genericRouter.get('', (req, res) => {
 
 genericRouter.get('/ping', (req, res) => {
     const renv = process.env.NODE_ENV
+
+
     const host = process.env.HOSTNAME
+    const now = moment(new Date()).format(dateFormat)
 
     res.send({ 'message': 'Response from ping: pong',
                 'environment': renv,
-                'hostname': host })
+                'hostname': host,
+                '@': now })
 })
 
 genericRouter.post('', sampleAuth, async(req, res) => {
