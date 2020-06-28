@@ -10,9 +10,11 @@ const app = require('./app.js')
 
 //const port = process.env.PORT || 3000
 const port = 8080
+const key1 = process.env.key1
 
 const server = http.createServer(app)
 
 server.listen(port, () => {
     console.log(`listens to ${port}`)
+    console.log(`Key1 value ${key1}`)
 })
