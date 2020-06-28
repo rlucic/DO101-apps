@@ -16,5 +16,5 @@ const server = http.createServer(app)
 
 server.listen(port, () => {
     console.log(`listens to ${port}`)
-    console.log(`Key1 value ${key1}`)
+    console.log(`key1 value: ${key1}`)
 })

@@ -17,7 +17,12 @@ genericRouter.get('', (req, res) => {
 
 
 genericRouter.get('/ping', (req, res) => {
-    res.send({ 'message': 'Response from ping: pong' })
+    const renv = process.env.NODE_ENV
+    const host = process.env.HOSTNAME
+
+    res.send({ 'message': 'Response from ping: pong',
+                'environment': renv,
+                'hostname': host })
 })
 
 genericRouter.post('', sampleAuth, async(req, res) => {
