@@ -16,5 +16,10 @@ const server = http.createServer(app)
 
 server.listen(port, () => {
     console.log(`listens to ${port}`)
-    console.log(`key1 value: ${key1}`)
+    if(!key1){
+        console.log('Need to define env var key1')
+    }
+    else{
+        console.log(`key1 value: ${key1}`)
+    }
 })

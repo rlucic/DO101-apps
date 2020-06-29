@@ -24,21 +24,24 @@ genericRouter.get('/ping', (req, res) => {
 
     const host = process.env.HOSTNAME
     const now = moment(new Date()).format(dateFormat)
-
-    res.send({ 'message': 'Response from ping: pong',
-                'environment': renv,
-                'hostname': host,
-                '@': now })
+    const sendBack = {
+        'message': 'Response from ping: pong',
+        'environment': renv,
+        'running on': host,
+        '@': now
+    }
+    console.log(sendBack)
+    res.send(sendBack)
 })
 
-genericRouter.post('', sampleAuth, async(req, res) => {
+genericRouter.post('', sampleAuth, async (req, res) => {
     const body = req.body
     console.log(body)
 
-    if (!body.key){
-        return res.status(400).send({'error': 'post a json like: key=value'})
+    if (!body.key) {
+        return res.status(400).send({ 'error': 'post a json like: key=value' })
     }
-    res.send({'message': 'received: ' + JSON.stringify(body)})
+    res.send({ 'message': 'received: ' + JSON.stringify(body) })
 })
 
 module.exports = genericRouter
