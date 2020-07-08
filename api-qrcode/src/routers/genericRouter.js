@@ -79,12 +79,12 @@ genericRouter.post('/image', sampleAuth, async (req, res) => {
  */
 genericRouter.post('/generate', sampleAuth, async (req, res) => {
     const body = req.body
-    console.log(body)
+    console.log('req.body content: ' , body)
 
     if (!body.text) {
         return res.status(400).send({ 'error': 'post a JSON like: text=value' })
     }
-    var accept = req.accepts(['text/plain', 'text/html'])
+    var accept = req.accepts(['text/plain', 'text/html', 'application/json'])
     console.log('Accept: ', accept)
     try {
         if (accept === false) {
@@ -104,10 +104,22 @@ genericRouter.post('/generate', sampleAuth, async (req, res) => {
             console.log('Accepts text/plain')
             var idx = img64.indexOf('base64')
             res.setHeader('Content-Type', accept)
-            return res.send(img64.substring(idx + 7))
+           // return res.send(img64.substring(idx + 7))
+            return res.send(img64)
             //throw new Error('something went wrong')
         }
 
+        else if (accept.indexOf('json') >= 0) {
+            var img64 = await qrCodeAsDataURI(body.text)
+            console.log('Accepts applicatoion/json')
+            var idx = img64.indexOf('base64')
+            res.setHeader('Content-Type', accept)
+           // return res.send(img64.substring(idx + 7))
+           let toReturn = {'qrimage': img64}
+           console.log(toReturn)
+            return res.send(toReturn)
+            //throw new Error('something went wrong')
+        }
     } catch (error) {
         console.log(error)
         return res.status(400).send(error.toString())
